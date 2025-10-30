@@ -1,5 +1,6 @@
-package com.sparta.airplane.ticketing.domain.reservation.vo;
+package com.sparta.airplane.ticketing.domain.reservation.domain.vo;
 
+import com.sparta.airplane.ticketing.domain.reservation.domain.vo.ReservationNumber;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

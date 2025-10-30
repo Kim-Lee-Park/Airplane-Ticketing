@@ -1,4 +1,4 @@
-package com.sparta.airplane.ticketing.domain.reservation.vo;
+package com.sparta.airplane.ticketing.domain.reservation.domain.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
