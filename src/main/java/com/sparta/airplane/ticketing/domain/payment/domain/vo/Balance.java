@@ -1,8 +1,7 @@
-package com.sparta.airplane.ticketing.domain.reservation.domain.vo;
+package com.sparta.airplane.ticketing.domain.payment.domain.vo;
 
 import jakarta.persistence.Embeddable;
 import java.math.BigDecimal;
-import java.util.List;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,12 +10,12 @@ import lombok.NoArgsConstructor;
 @Getter
 @Embeddable
 @EqualsAndHashCode
-@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
-public class TotalAmount {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Balance {
 
-    private final BigDecimal amount;
+    private BigDecimal amount;
 
-    public TotalAmount(BigDecimal amount) {
+    private Balance(BigDecimal amount) {
         if (amount == null) {
             throw new IllegalArgumentException("금액은 null일 수 없습니다");
         }
@@ -28,7 +27,7 @@ public class TotalAmount {
         this.amount = amount;
     }
 
-    public static TotalAmount from(List<Passenger> passengers) {
-        return new TotalAmount(BigDecimal.valueOf(10000L));
+    public static Balance of(BigDecimal amount) {
+        return new Balance(amount);
     }
 }

@@ -13,4 +13,8 @@ public record ReservationNumber(
             throw new IllegalArgumentException("예약 번호는 필수입니다.");
         }
     }
+
+    public static ReservationNumber of(String reservationNumber) {
+        return new ReservationNumber(reservationNumber);
+    }
 }

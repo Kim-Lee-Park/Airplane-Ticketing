@@ -1,7 +1,11 @@
 package com.sparta.airplane.ticketing.domain.reservation.domain.entity;
 
 import com.sparta.airplane.ticketing.domain.reservation.domain.ReservationNumberGenerator;
-import com.sparta.airplane.ticketing.domain.reservation.domain.vo.*;
+import com.sparta.airplane.ticketing.domain.reservation.domain.vo.Passenger;
+import com.sparta.airplane.ticketing.domain.reservation.domain.vo.ReservationNumber;
+import com.sparta.airplane.ticketing.domain.reservation.domain.vo.ReservationStatus;
+import com.sparta.airplane.ticketing.domain.reservation.domain.vo.RouteInfo;
+import com.sparta.airplane.ticketing.domain.reservation.domain.vo.TotalAmount;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.CollectionTable;
@@ -92,5 +96,9 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
         reservation.reservationStatus = ReservationStatus.AWAIT_CONFIRMED;
 
         return reservation;
+    }
+
+    public void confirm() {
+        this.reservationStatus = ReservationStatus.CONFIRMED;
     }
 }
