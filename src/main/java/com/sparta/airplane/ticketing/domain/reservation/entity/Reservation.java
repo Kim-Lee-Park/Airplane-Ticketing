@@ -1,9 +1,9 @@
-package com.sparta.airplane.ticketing.domain.entity;
+package com.sparta.airplane.ticketing.domain.reservation.entity;
 
-import com.sparta.airplane.ticketing.domain.vo.Passenger;
-import com.sparta.airplane.ticketing.domain.vo.ReservationStatus;
-import com.sparta.airplane.ticketing.domain.vo.RouteInfo;
-import com.sparta.airplane.ticketing.domain.vo.TotalAmount;
+import com.sparta.airplane.ticketing.domain.reservation.vo.Passenger;
+import com.sparta.airplane.ticketing.domain.reservation.vo.ReservationStatus;
+import com.sparta.airplane.ticketing.domain.reservation.vo.RouteInfo;
+import com.sparta.airplane.ticketing.domain.reservation.vo.TotalAmount;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.CollectionTable;

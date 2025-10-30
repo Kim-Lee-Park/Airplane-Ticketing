@@ -1,13 +1,13 @@
-package com.sparta.airplane.ticketing.domain.vo;
+package com.sparta.airplane.ticketing.domain.reservation.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum RouteType {
-    ONE_WAY("편도"),
-    ROUND_TRIP("왕복");
+public enum Gender {
+    MALE("남성"),
+    FEMALE("여성");
 
     private final String description;
 }

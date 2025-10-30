@@ -1,4 +1,4 @@
-package com.sparta.airplane.ticketing.domain.vo;
+package com.sparta.airplane.ticketing.domain.reservation.vo;
 
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
