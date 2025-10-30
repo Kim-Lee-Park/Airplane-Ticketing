@@ -9,16 +9,24 @@ import java.time.LocalDate;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Comment;
 
 @Getter
 @Embeddable
 @EqualsAndHashCode
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED, force = true)
 public class Passenger {
+    @Comment("승객 이름")
     private final String name;
+
+    @Comment("승객 성별")
     private final Gender gender;
+
+    @Comment("생년월일")
     private final LocalDate birthDate;
-    private final String fareClass; // 단순 좌석보다는 운임 클래스 정책에 관한 부분인데 우선은 그냥 String 으로 생성했습니다
+
+    @Comment("운임 클래스")
+    private final String fareClass;
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "specialServiceCode", column = @Column(name = "special_service_code")),

@@ -6,6 +6,7 @@ import jakarta.persistence.Enumerated;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Comment;
 
 @Getter
 @Embeddable
@@ -14,8 +15,13 @@ import lombok.NoArgsConstructor;
 // Protected 접근 제어자 + force 옵션을 통해 final 필드에 기본값 설정
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED, force = true)
 public class RouteInfo {
+    @Comment("출발지")
     private final String from;
+
+    @Comment("도착지")
     private final String to;
+
+    @Comment("경로 정보 타입")
     @Enumerated(EnumType.STRING)
     private final RouteType routeType;
 

@@ -30,6 +30,4 @@ public class TotalAmount {
     public static TotalAmount of(BigDecimal amount) {
         return new TotalAmount(amount);
     }
-
-    // 금액 관련 메소드 추가
 }

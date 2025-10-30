@@ -23,6 +23,7 @@ import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.NaturalId;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
@@ -35,26 +36,33 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NaturalId // 비즈니스적인 ID를 구성하는 어노테이션
+
+    @NaturalId
+    @Comment("예약 번호")
     private String reservationNumber;
+
+    @Comment("항공사")
     private String airline;
+
     @Enumerated(EnumType.STRING)
+    @Comment("예약 상태")
     private ReservationStatus reservationStatus;
+
+    @Comment("생성 일시")
     private LocalDateTime createdAt;
 
-    // @AttributeOverride 옵션의 name 속성은 VO 클래스의 실제 필드명
-    // column 속성은 테이블 생성 시 사용할 컬럼명을 설정
-    // ERD 설계에 따라 컬럼명은 변경될 수 있음
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "from", column = @Column(name = "departure_airport")),
         @AttributeOverride(name = "to", column = @Column(name = "arrival_airport")),
         @AttributeOverride(name = "routeType", column = @Column(name = "route_type"))
     })
+    @Comment("항공편 경로 정보")
     private RouteInfo routeInfo;
 
     @Embedded
     @AttributeOverride(name = "amount", column = @Column(name = "total_amount"))
+    @Comment("총 가격")
     private TotalAmount totalAmount;
 
     @ElementCollection
@@ -62,6 +70,7 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
         name = "reservation_passengers",
         joinColumns = @JoinColumn(name = "reservation_id")
     )
+    @Comment("예약된 승객들")
     private List<Passenger> passengers;
 
     public static Reservation create(String airline, RouteInfo routeInfo, List<Passenger> passengers, TotalAmount totalAmount) {
