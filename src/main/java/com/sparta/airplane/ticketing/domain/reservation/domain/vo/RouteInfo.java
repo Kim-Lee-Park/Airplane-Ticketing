@@ -1,4 +1,4 @@
-package com.sparta.airplane.ticketing.domain.reservation.vo;
+package com.sparta.airplane.ticketing.domain.reservation.domain.vo;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
@@ -6,20 +6,24 @@ import jakarta.persistence.Enumerated;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Comment;
 
 @Getter
 @Embeddable
 @EqualsAndHashCode
-// 값 객체의 경우 불변 보장을 위해 필드를 final로 선언, JPA에서 리플렉션을 통해 객체를 생성할 수 있도록 기본 생성자 필요
-// Protected 접근 제어자 + force 옵션을 통해 final 필드에 기본값 설정
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED, force = true)
 public class RouteInfo {
+    @Comment("출발지")
     private final String from;
+
+    @Comment("도착지")
     private final String to;
+
+    @Comment("경로 정보 타입")
     @Enumerated(EnumType.STRING)
     private final RouteType routeType;
 
-    private RouteInfo(String from, String to, RouteType routeType) {
+    public RouteInfo(String from, String to, RouteType routeType) {
         if (from == null || from.isBlank()) {
             throw new IllegalArgumentException("출발지는 필수입니다");
         }
@@ -36,11 +40,7 @@ public class RouteInfo {
     }
 
     // 별도의 표시를 하지 않았을 시에는 편도를 기본값으로 사용
-    public static RouteInfo of(String from, String to) {
-        return new RouteInfo(from, to, RouteType.ONE_WAY);
-    }
-
-    public static RouteInfo of(String from, String to, RouteType routeType) {
-        return new RouteInfo(from, to, routeType);
+    public RouteInfo(String from, String to) {
+        this(from, to, RouteType.ONE_WAY);
     }
 }

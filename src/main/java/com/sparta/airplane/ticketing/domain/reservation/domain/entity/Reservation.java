@@ -1,9 +1,7 @@
-package com.sparta.airplane.ticketing.domain.reservation.entity;
+package com.sparta.airplane.ticketing.domain.reservation.domain.entity;
 
-import com.sparta.airplane.ticketing.domain.reservation.vo.Passenger;
-import com.sparta.airplane.ticketing.domain.reservation.vo.ReservationStatus;
-import com.sparta.airplane.ticketing.domain.reservation.vo.RouteInfo;
-import com.sparta.airplane.ticketing.domain.reservation.vo.TotalAmount;
+import com.sparta.airplane.ticketing.domain.reservation.domain.ReservationNumberGenerator;
+import com.sparta.airplane.ticketing.domain.reservation.domain.vo.*;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.CollectionTable;
@@ -23,38 +21,52 @@ import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.NaturalIdCache;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
 @Entity
 @Table(name = "reservations")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NaturalIdCache
 public class Reservation extends AbstractAggregateRoot<Reservation> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NaturalId // 비즈니스적인 ID를 구성하는 어노테이션
-    private String reservationNumber;
+
+    @NaturalId
+    @Embedded
+    private ReservationNumber reservationNumber;
+
+    @Column(name = "aireline", nullable = false)
+    @Comment("항공사")
     private String airline;
+
     @Enumerated(EnumType.STRING)
+    @Comment("예약 상태")
     private ReservationStatus reservationStatus;
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    @Comment("생성 일시")
     private LocalDateTime createdAt;
 
-    // @AttributeOverride 옵션의 name 속성은 VO 클래스의 실제 필드명
-    // column 속성은 테이블 생성 시 사용할 컬럼명을 설정
-    // ERD 설계에 따라 컬럼명은 변경될 수 있음
     @Embedded
     @AttributeOverrides({
-        @AttributeOverride(name = "from", column = @Column(name = "departure_airport")),
-        @AttributeOverride(name = "to", column = @Column(name = "arrival_airport")),
-        @AttributeOverride(name = "routeType", column = @Column(name = "route_type"))
+        @AttributeOverride(name = "from", column = @Column(name = "departure_airport", nullable = false)),
+        @AttributeOverride(name = "to", column = @Column(name = "arrival_airport", nullable = false)),
+        @AttributeOverride(name = "routeType", column = @Column(name = "route_type", nullable = false)),
     })
+    @Comment("항공편 경로 정보")
     private RouteInfo routeInfo;
 
     @Embedded
     @AttributeOverride(name = "amount", column = @Column(name = "total_amount"))
+    @Comment("총 가격")
     private TotalAmount totalAmount;
 
     @ElementCollection
@@ -62,25 +74,22 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
         name = "reservation_passengers",
         joinColumns = @JoinColumn(name = "reservation_id")
     )
+    @Comment("예약된 승객들")
     private List<Passenger> passengers;
 
-    public static Reservation create(String airline, RouteInfo routeInfo, List<Passenger> passengers, TotalAmount totalAmount) {
-        // 예약번호 생성 로직 필요
-        String reservationNumber = "TEST-NUMBER";
-
+    public static Reservation create(String airline, RouteInfo routeInfo, List<Passenger> passengers, ReservationNumberGenerator generator) {
         // 검증 로직 필요
         if (airline == null || airline.isBlank()) {
             throw new IllegalArgumentException("항공사는 필수입니다");
         }
 
         Reservation reservation = new Reservation();
-        reservation.reservationNumber = reservationNumber;
+        reservation.reservationNumber = generator.generate();
         reservation.airline = airline;
         reservation.routeInfo = routeInfo;
         reservation.passengers = List.copyOf(passengers);
-        reservation.totalAmount = totalAmount;
+        reservation.totalAmount = TotalAmount.from(passengers);
         reservation.reservationStatus = ReservationStatus.AWAIT_CONFIRMED;
-        reservation.createdAt = LocalDateTime.now();
 
         return reservation;
     }
