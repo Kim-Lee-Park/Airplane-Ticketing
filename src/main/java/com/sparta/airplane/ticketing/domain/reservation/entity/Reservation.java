@@ -18,10 +18,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NaturalId;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
 @Entity
@@ -33,12 +35,14 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NaturalId // 비즈니스적인 ID를 구성하는 어노테이션
     private String reservationNumber;
     private String airline;
     @Enumerated(EnumType.STRING)
     private ReservationStatus reservationStatus;
+    private LocalDateTime createdAt;
 
-    // @AttributeOverride 옵션의 name 속성은 VO 클래스의 실제 필드명,
+    // @AttributeOverride 옵션의 name 속성은 VO 클래스의 실제 필드명
     // column 속성은 테이블 생성 시 사용할 컬럼명을 설정
     // ERD 설계에 따라 컬럼명은 변경될 수 있음
     @Embedded
@@ -75,7 +79,8 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
         reservation.routeInfo = routeInfo;
         reservation.passengers = List.copyOf(passengers);
         reservation.totalAmount = totalAmount;
-        reservation.reservationStatus = ReservationStatus.PENDING;
+        reservation.reservationStatus = ReservationStatus.AWAIT_CONFIRMED;
+        reservation.createdAt = LocalDateTime.now();
 
         return reservation;
     }
