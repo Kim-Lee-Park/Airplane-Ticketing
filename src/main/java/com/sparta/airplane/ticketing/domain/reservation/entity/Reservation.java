@@ -1,9 +1,6 @@
 package com.sparta.airplane.ticketing.domain.reservation.entity;
 
-import com.sparta.airplane.ticketing.domain.reservation.vo.Passenger;
-import com.sparta.airplane.ticketing.domain.reservation.vo.ReservationStatus;
-import com.sparta.airplane.ticketing.domain.reservation.vo.RouteInfo;
-import com.sparta.airplane.ticketing.domain.reservation.vo.TotalAmount;
+import com.sparta.airplane.ticketing.domain.reservation.vo.*;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.CollectionTable;
@@ -24,13 +21,16 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.NaturalIdCache;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
 @Entity
 @Table(name = "reservations")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NaturalIdCache
 public class Reservation extends AbstractAggregateRoot<Reservation> {
 
     @Id
@@ -38,9 +38,10 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
     private Long id;
 
     @NaturalId
-    @Comment("예약 번호")
-    private String reservationNumber;
+    @Embedded
+    private ReservationNumber reservationNumber;
 
+    @Column(name = "aireline", nullable = false)
     @Comment("항공사")
     private String airline;
 
@@ -48,6 +49,8 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
     @Comment("예약 상태")
     private ReservationStatus reservationStatus;
 
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
     @Comment("생성 일시")
     private LocalDateTime createdAt;
 
@@ -73,24 +76,23 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
     @Comment("예약된 승객들")
     private List<Passenger> passengers;
 
-    public static Reservation create(String airline, RouteInfo routeInfo, List<Passenger> passengers, TotalAmount totalAmount) {
-        // 예약번호 생성 로직 필요
-        String reservationNumber = "TEST-NUMBER";
-
-        // 검증 로직 필요
-        if (airline == null || airline.isBlank()) {
-            throw new IllegalArgumentException("항공사는 필수입니다");
-        }
-
-        Reservation reservation = new Reservation();
-        reservation.reservationNumber = reservationNumber;
-        reservation.airline = airline;
-        reservation.routeInfo = routeInfo;
-        reservation.passengers = List.copyOf(passengers);
-        reservation.totalAmount = totalAmount;
-        reservation.reservationStatus = ReservationStatus.AWAIT_CONFIRMED;
-        reservation.createdAt = LocalDateTime.now();
-
-        return reservation;
-    }
+//    public static Reservation create(String airline, RouteInfo routeInfo, List<Passenger> passengers, TotalAmount totalAmount) {
+//        // 예약번호 생성 로직 필요
+//        String reservationNumber = "TEST-NUMBER";
+//
+//        // 검증 로직 필요
+//        if (airline == null || airline.isBlank()) {
+//            throw new IllegalArgumentException("항공사는 필수입니다");
+//        }
+//
+//        Reservation reservation = new Reservation();
+//        reservation.reservationNumber = reservationNumber;
+//        reservation.airline = airline;
+//        reservation.routeInfo = routeInfo;
+//        reservation.passengers = List.copyOf(passengers);
+//        reservation.totalAmount = totalAmount;
+//        reservation.reservationStatus = ReservationStatus.AWAIT_CONFIRMED;
+//
+//        return reservation;
+//    }
 }
