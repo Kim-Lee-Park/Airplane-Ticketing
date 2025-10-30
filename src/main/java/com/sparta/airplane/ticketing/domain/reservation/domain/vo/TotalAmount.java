@@ -15,7 +15,7 @@ public class TotalAmount {
 
     private final BigDecimal amount;
 
-    private TotalAmount(BigDecimal amount) {
+    public TotalAmount(BigDecimal amount) {
         if (amount == null) {
             throw new IllegalArgumentException("금액은 null일 수 없습니다");
         }
@@ -25,9 +25,5 @@ public class TotalAmount {
         }
 
         this.amount = amount;
-    }
-
-    public static TotalAmount of(BigDecimal amount) {
-        return new TotalAmount(amount);
     }
 }
