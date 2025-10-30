@@ -56,9 +56,9 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
 
     @Embedded
     @AttributeOverrides({
-        @AttributeOverride(name = "from", column = @Column(name = "departure_airport")),
-        @AttributeOverride(name = "to", column = @Column(name = "arrival_airport")),
-        @AttributeOverride(name = "routeType", column = @Column(name = "route_type"))
+        @AttributeOverride(name = "from", column = @Column(name = "departure_airport", nullable = false)),
+        @AttributeOverride(name = "to", column = @Column(name = "arrival_airport", nullable = false)),
+        @AttributeOverride(name = "routeType", column = @Column(name = "route_type", nullable = false)),
     })
     @Comment("항공편 경로 정보")
     private RouteInfo routeInfo;
