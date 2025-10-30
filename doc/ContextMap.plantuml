@@ -1,0 +1,56 @@
+@startuml
+title 항공 예약 시스템 Context Map
+
+skinparam backgroundColor #FFFFFF
+skinparam rectangle {
+  BorderColor #C7C9CC
+  RoundCorner 15
+}
+skinparam arrow {
+  Color #374151
+  FontColor #111827
+  Thickness 1.2
+}
+skinparam note {
+  BackgroundColor #F3F4F6
+  BorderColor #D1D5DB
+  FontColor #111827
+  FontSize 12
+}
+
+' 컨텍스트 정의
+rectangle "Reservation\n(예약)" as Reservation #A7C7E7
+rectangle "Payment\n(결제)" as Payment #D0BFFF
+rectangle "Ticketing\n(발권)" as Ticketing #B7E4C7
+
+note right of Reservation
+역할
+- 결제 정보 전달
+- 승객 정보 입력
+- 가격 계산 정책 설정 (운임, 수수료 등)
+end note
+
+note bottom of Payment
+역할
+- 결제 승인, 실패, 취소 처리
+- 마일리지 적립 및 차감 정책
+end note
+
+note left of Ticketing
+역할
+- 항공편 정보 조회
+- 좌석 배정 (유료/자동)
+- 항공권 생성 및 고객 전달
+end note
+
+' 관계 (U/D 명시)
+Reservation --> Payment : D
+Payment --> Reservation : U
+
+Reservation --> Ticketing : D
+Ticketing --> Reservation : U
+
+Payment --> Ticketing : D
+Ticketing --> Payment : U
+
+@enduml
