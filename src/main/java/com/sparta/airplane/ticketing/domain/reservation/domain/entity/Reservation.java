@@ -1,5 +1,6 @@
 package com.sparta.airplane.ticketing.domain.reservation.domain.entity;
 
+import com.sparta.airplane.ticketing.domain.reservation.domain.ReservationNumberGenerator;
 import com.sparta.airplane.ticketing.domain.reservation.domain.vo.*;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
@@ -76,16 +77,14 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
     @Comment("예약된 승객들")
     private List<Passenger> passengers;
 
-    public static Reservation create(String airline, RouteInfo routeInfo, List<Passenger> passengers, TotalAmount totalAmount) {
-        // 예약번호 생성 로직 필요
-        String reservationNumber = "TEST-NUMBER";
-
+    public static Reservation create(String airline, RouteInfo routeInfo, List<Passenger> passengers, TotalAmount totalAmount, ReservationNumberGenerator generator) {
         // 검증 로직 필요
         if (airline == null || airline.isBlank()) {
             throw new IllegalArgumentException("항공사는 필수입니다");
         }
 
         Reservation reservation = new Reservation();
+        reservation.reservationNumber = generator.generate();
         reservation.airline = airline;
         reservation.routeInfo = routeInfo;
         reservation.passengers = List.copyOf(passengers);
