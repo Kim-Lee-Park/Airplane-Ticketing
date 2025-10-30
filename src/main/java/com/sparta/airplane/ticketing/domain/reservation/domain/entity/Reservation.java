@@ -77,7 +77,7 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
     @Comment("예약된 승객들")
     private List<Passenger> passengers;
 
-    public static Reservation create(String airline, RouteInfo routeInfo, List<Passenger> passengers, TotalAmount totalAmount, ReservationNumberGenerator generator) {
+    public static Reservation create(String airline, RouteInfo routeInfo, List<Passenger> passengers, ReservationNumberGenerator generator) {
         // 검증 로직 필요
         if (airline == null || airline.isBlank()) {
             throw new IllegalArgumentException("항공사는 필수입니다");
@@ -88,7 +88,7 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
         reservation.airline = airline;
         reservation.routeInfo = routeInfo;
         reservation.passengers = List.copyOf(passengers);
-        reservation.totalAmount = totalAmount;
+        reservation.totalAmount = TotalAmount.from(passengers);
         reservation.reservationStatus = ReservationStatus.AWAIT_CONFIRMED;
 
         return reservation;

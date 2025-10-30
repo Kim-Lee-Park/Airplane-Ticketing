@@ -2,6 +2,7 @@ package com.sparta.airplane.ticketing.domain.reservation.domain.vo;
 
 import jakarta.persistence.Embeddable;
 import java.math.BigDecimal;
+
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
