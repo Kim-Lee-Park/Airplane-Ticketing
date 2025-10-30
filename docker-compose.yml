@@ -1,0 +1,12 @@
+services:
+  postgresql-database:
+    container_name: airplane-ticketing
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ticketing
+      TZ: Asia/Seoul
+    ports:
+      - "5433:5432"
