@@ -120,4 +120,30 @@ public class Payment extends AbstractAggregateRoot<Payment> {
 
         this.paymentStatus = PaymentStatus.COMPLETED;
     }
+
+    public void refund() {
+        if (this.paymentStatus != PaymentStatus.COMPLETED) {
+            throw new IllegalStateException("완료된 결제만 환불 가능합니다");
+        }
+
+        if (this.paymentStatus == PaymentStatus.REFUNDED) {
+            throw new IllegalStateException("이미 환불된 결제입니다");
+        }
+
+        this.paymentStatus = PaymentStatus.REFUNDED;
+    }
+
+    public List<MileagePaymentItem> getMileagePaymentItems() {
+        return paymentItems.stream()
+            .filter(MileagePaymentItem.class::isInstance)
+            .map(MileagePaymentItem.class::cast)
+            .toList();
+    }
+
+    public List<CardPaymentItem> getCardPaymentItems() {
+        return paymentItems.stream()
+            .filter(CardPaymentItem.class::isInstance)
+            .map(CardPaymentItem.class::cast)
+            .toList();
+    }
 }

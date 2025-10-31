@@ -1,4 +1,4 @@
-package com.sparta.airplane.ticketing.domain.ticketing.infrastructure.client.dto;
+package com.sparta.airplane.ticketing.domain.reservation.infrastructure.client.dto;
 
 /**
  * 외부 Flight DTO 클래스

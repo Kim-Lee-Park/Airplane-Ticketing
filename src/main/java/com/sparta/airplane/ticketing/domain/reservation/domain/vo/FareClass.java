@@ -1,7 +1,9 @@
 package com.sparta.airplane.ticketing.domain.reservation.domain.vo;
 
 import java.math.BigDecimal;
+import lombok.Getter;
 
+@Getter
 public enum FareClass {
     PROMOTION(
             50,

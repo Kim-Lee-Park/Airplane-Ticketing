@@ -75,4 +75,26 @@ public class MileageWallet extends AbstractAggregateRoot<MileageWallet> {
 
         this.mileageHistories.add(history);
     }
+
+    public void earn(BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("적립 금액은 0보다 커야 합니다");
+        }
+
+        BigDecimal previousBalance = this.balance.getAmount();
+
+        BigDecimal afterBalance = previousBalance.add(amount);
+
+        this.balance = Balance.of(afterBalance);
+
+        MileageHistory history = MileageHistory.create(
+            previousBalance,
+            amount,
+            afterBalance,
+            MileageTransactionType.EARN,
+            this
+        );
+
+        this.mileageHistories.add(history);
+    }
 }

@@ -1,8 +1,8 @@
-package com.sparta.airplane.ticketing.domain.ticketing.infrastructure.client;
+package com.sparta.airplane.ticketing.domain.reservation.infrastructure.client;
 
 import com.sparta.airplane.ticketing.domain.reservation.application.client.FlightClient;
 import com.sparta.airplane.ticketing.domain.reservation.domain.vo.FlightInfo;
-import com.sparta.airplane.ticketing.domain.ticketing.infrastructure.client.dto.FlightDto;
+import com.sparta.airplane.ticketing.domain.reservation.infrastructure.client.dto.FlightDto;
 
 public class FlightClientImpl implements FlightClient {
 

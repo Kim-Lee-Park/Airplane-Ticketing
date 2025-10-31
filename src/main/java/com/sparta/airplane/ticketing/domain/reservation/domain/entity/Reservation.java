@@ -101,4 +101,27 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
     public void confirm() {
         this.reservationStatus = ReservationStatus.CONFIRMED;
     }
+
+    public boolean isCancellable() {
+        if (this.reservationStatus == ReservationStatus.CANCELLED) {
+            return false;
+        }
+
+        if (this.reservationStatus != ReservationStatus.CONFIRMED) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public void cancel() {
+        if (!isCancellable()) {
+            throw new IllegalStateException("취소할 수 없는 예약입니다");
+        }
+        this.reservationStatus = ReservationStatus.CANCELLED;
+    }
+
+    public boolean isConfirmed() {
+        return this.reservationStatus == ReservationStatus.CONFIRMED;
+    }
 }

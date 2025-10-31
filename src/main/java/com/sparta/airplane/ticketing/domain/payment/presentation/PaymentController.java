@@ -6,6 +6,7 @@ import com.sparta.airplane.ticketing.domain.payment.presentation.request.Payment
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,5 +30,14 @@ public class PaymentController {
         Long paymentId = paymentService.requestPayment(command);
 
         return ResponseEntity.ok().body(paymentId);
+    }
+
+    @PostMapping("/{paymentId}/refund")
+    public ResponseEntity<?> refundPayment(
+        @PathVariable Long paymentId
+    ) {
+        paymentService.refundPayment(paymentId);
+
+        return ResponseEntity.ok().build();
     }
 }

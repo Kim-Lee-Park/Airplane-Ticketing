@@ -2,6 +2,8 @@ package com.sparta.airplane.ticketing.domain.payment.application;
 
 import com.sparta.airplane.ticketing.domain.payment.application.client.ReservationClient;
 import com.sparta.airplane.ticketing.domain.payment.application.command.PaymentRequestCommand;
+import com.sparta.airplane.ticketing.domain.payment.domain.entity.CardPaymentItem;
+import com.sparta.airplane.ticketing.domain.payment.domain.entity.MileagePaymentItem;
 import com.sparta.airplane.ticketing.domain.payment.domain.entity.MileageWallet;
 import com.sparta.airplane.ticketing.domain.payment.domain.entity.Payment;
 import com.sparta.airplane.ticketing.domain.payment.domain.repository.MileageWalletRepository;
@@ -56,6 +58,24 @@ public class PaymentService {
         return saved.getId();
     }
 
+    @Transactional
+    public void refundPayment(Long paymentId) {
+        Payment payment = paymentRepository.findById(paymentId)
+            .orElseThrow(() -> new IllegalArgumentException("결제를 찾을 수 없습니다"));
+
+        for (MileagePaymentItem item : payment.getMileagePaymentItems()) {
+            restoreMileage(item);
+        }
+
+        for (CardPaymentItem item : payment.getCardPaymentItems()) {
+            refundCard(item);
+        }
+
+        payment.refund();
+
+        paymentRepository.save(payment);
+    }
+
     private boolean useMileage(PaymentRequestCommand command) {
         return command.mileageUseAmount() != null && command.mileageUseAmount().compareTo(BigDecimal.ZERO) > 0;
     }
@@ -76,5 +96,16 @@ public class PaymentService {
             PaymentItemAmount.of(command.mileageUseAmount()),
             mileageWallet.getId()
         );
+    }
+
+    private void restoreMileage(MileagePaymentItem item) {
+        MileageWallet wallet = mileageWalletRepository.findById(item.getMileageWalletId())
+            .orElseThrow(() -> new IllegalArgumentException("마일리지 지갑을 찾을 수 없습니다"));
+
+        wallet.earn(item.getAmount().getAmount());
+    }
+
+    private void refundCard(CardPaymentItem item) {
+        // TODO: 실제 PG사 환불 API 연동
     }
 }
