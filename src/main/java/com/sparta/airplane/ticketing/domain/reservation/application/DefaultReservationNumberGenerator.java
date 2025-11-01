@@ -1,4 +1,4 @@
-package com.sparta.airplane.ticketing.domain.reservation.tmpApplication;
+package com.sparta.airplane.ticketing.domain.reservation.application;
 
 import com.sparta.airplane.ticketing.domain.reservation.domain.ReservationNumberGenerator;
 import com.sparta.airplane.ticketing.domain.reservation.domain.vo.ReservationNumber;
