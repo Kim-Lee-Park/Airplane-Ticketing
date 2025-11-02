@@ -1,13 +1,23 @@
 package com.sparta.airplane.ticketing.domain.reservation.domain.vo;
 
-import jakarta.persistence.*;
-
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import java.time.LocalDate;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
+/**
+ * 예약된 승객 정보 관련 값 객체
+ * - 승객별 운임 클래스, 특별 서비스 옵션 관리
+ * - 이름, 생년월일, 운임 클래스 관련 검증 로직을 생성자에 포함
+ */
 @Getter
 @Embeddable
 @EqualsAndHashCode

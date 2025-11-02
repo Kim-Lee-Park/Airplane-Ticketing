@@ -8,6 +8,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
+/**
+ * 항공편 정보 관련 값 객체
+ * - 출발지, 도착지, 편도/왕복 여부 관리
+ * - 출발지, 도착지 관련 검증 로직을 생성자에 포함
+ * - 별도의 요청이 존재하지 않을 시 편도를 기본 옵션으로 설정
+ */
 @Getter
 @Embeddable
 @EqualsAndHashCode

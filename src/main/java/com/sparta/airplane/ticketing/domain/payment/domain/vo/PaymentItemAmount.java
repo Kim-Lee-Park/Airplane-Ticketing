@@ -7,6 +7,11 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * 결제 항목 금액 값 객체
+ * - 개별 결제 수단(카드, 마일리지)의 결제 금액을 나타냄
+ * - 양수 및 null 검증 로직 포함
+ */
 @Getter
 @Embeddable
 @EqualsAndHashCode

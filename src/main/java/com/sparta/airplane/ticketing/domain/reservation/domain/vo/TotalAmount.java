@@ -8,6 +8,12 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * 예약 총 금액 관련 값 객체
+ * - 금액이라는 의미는 측정값으로 amount의 크기에 따라 동등성 비교
+ * - 금액 관련 검증 로직을 생성자에 포함
+ * - 관련 정책이 존재하지 않아 임의 값으로 우선 설정
+ */
 @Getter
 @Embeddable
 @EqualsAndHashCode

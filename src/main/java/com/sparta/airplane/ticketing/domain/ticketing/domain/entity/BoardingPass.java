@@ -24,6 +24,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
+/**
+ * 탑승권 Aggregate Root
+ *
+ * <역할>
+ * - 공항에서 발급되는 탑승권 정보를 관리하는 핵심 도메인 객체
+ * - 좌석 번호, 탑승 게이트, 탑승 시간, 항공편 정보, 승객 정보 포함
+ * - 항공권(PlaneTicket) 발행 후 체크인 시 생성됨
+ *
+ * <설계 이유>
+ * - Aggregate Root로 설계한 이유:
+ *   1. 탑승권은 항공권과 별개로 독립적인 생명주기를 가짐 (체크인 시 발급)
+ *   2. 탑승권 정보는 하나의 일관성 단위로 관리되어야 함
+ *   3. 항공권(PlaneTicket)과는 ID로만 참조하여 결합도 낮춤
+ *
+ * <Aggregate 경계>
+ * - BoardingPass (루트)
+ * - PlaneTicketId, SeatNumber, BoardingGate, PassengerName, Airport, FlightNumber, FareClass, Airline (값 객체)
+ */
 @Entity
 @Table(name = "boarding_pass")
 @Getter

@@ -20,6 +20,21 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * 좌석 Entity
+ *
+ * <역할>
+ * - 항공편의 개별 좌석 정보 및 배정 상태를 관리
+ * - 좌석 번호, 운임 클래스, 좌석 상태(예약 가능/배정됨 등), 배정된 승객 정보 포함
+ *
+ * <설계 이유>
+ * - Entity로 설계한 이유:
+ *   1. 식별자(ID)가 필요하며, 좌석 배정 상태가 변경되는 생명주기 존재
+ *   2. 좌석은 항공편과 독립적으로 조회 및 관리 가능
+ *
+ * - Aggregate Root가 아닌 이유:
+ *   좌석의 경우, 좌석 상태(LOCK 여부)가 관리되며, 추적될 필요가 있음
+ */
 @Entity
 @Table(name = "seats")
 @Getter

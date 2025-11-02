@@ -21,7 +21,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
-
+/**
+ * 항공편 Aggregate Root
+ *
+ * <역할>
+ * - 항공편 스케줄 및 운항 정보를 관리하는 핵심 도메인 객체
+ * - 출발지/도착지, 출발/도착 시간, 승객 정원, 항공사 정보 포함
+ * - 항공편 상태(출발 대기, 출발, 도착, 지연 등) 관리
+ *
+ * <설계 이유>
+ * - Aggregate Root로 설계한 이유:
+ *   1. 항공편은 독립적인 비즈니스 경계를 가지며, 항공편 정보는 하나의 일관성 단위로 관리됨
+ *   2. 항공편 상태 변경 시 모든 관련 정보의 일관성 보장 필요
+ *   3. 출발/도착 시간 검증 같은 비즈니스 규칙이 항공편 컨텍스트 내에서 결정됨
+ *
+ * <Aggregate 경계>
+ * - Flight (루트)
+ * - FlightStatus, Airport, FlightType, PassengerCapacity, Airline (값 객체)
+ */
 @Entity
 @Table(name = "flights")
 @Getter

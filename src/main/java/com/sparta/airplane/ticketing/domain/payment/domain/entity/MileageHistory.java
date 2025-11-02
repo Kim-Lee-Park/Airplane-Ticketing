@@ -15,6 +15,23 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * 마일리지 거래 이력 Entity
+ *
+ * <역할>
+ * - MileageWallet Aggregate 내에서 개별 마일리지 거래(적립/사용)를 기록
+ * - 거래 전후 잔액, 변동 금액, 거래 유형을 추적하여 감사 추적(Audit Trail) 제공
+ *
+ * <설계 이유>
+ * - Entity로 설계한 이유:
+ *   1. 식별자(ID)가 필요하며, 각 거래는 독립적인 이력으로 관리됨
+ *   2. 시간 순서대로 정렬 가능한 이력 데이터
+ *
+ * - Aggregate Root가 아닌 이유:
+ *   MileageWallet을 통해서만 생성되고 관리되며, 독립적으로 생성되지 않음
+ * - package-private 팩토리 메서드:
+ *   MileageWallet에서만 생성할 수 있도록 접근 제한하여 일관성 보장
+ */
 @Entity
 @Table(name = "mileage_histories")
 @Getter

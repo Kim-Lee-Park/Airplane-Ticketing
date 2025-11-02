@@ -24,6 +24,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
+/**
+ * 항공권 Aggregate Root
+ *
+ * <역할>
+ * - 예약 확정 후 발행되는 항공권 정보를 관리하는 핵심 도메인 객체
+ * - 항공권 금액, 출발/도착 공항, 승객 정보, 운임 클래스, 수하물 정보 포함
+ * - 항공권 상태(발행, 취소 등) 관리
+ *
+ * <설계 이유>
+ * - Aggregate Root로 설계한 이유:
+ *   1. 항공권은 예약과 별개로 독립적인 생명주기를 가짐 (발행, 취소, 환불)
+ *   2. 항공권 발행 후 티켓 정보는 하나의 일관성 단위로 관리되어야 함
+ *   3. 예약(Reservation)과는 ID로만 참조하여 결합도 낮춤
+ *
+ * <Aggregate 경계>
+ * - PlaneTicket (루트)
+ * - ReservationId, Amount, Airport, PassengerName, FareClass, BaggageCode, TicketStatus (값 객체)
+ */
 @Entity
 @Table(name = "plane_ticket")
 @Getter

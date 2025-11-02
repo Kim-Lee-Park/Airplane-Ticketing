@@ -5,6 +5,11 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * 예약 관련 각종 서비스를 관리하는 값 객체
+ * - 스폐셜 서비스, 부가 서비스, 수하물 정책, 기내식 여부 등을 관리
+ * - 별도의 정책 요구사항이 없어 검증 로직은 현재로서는 존재하지 않음
+ */
 @Getter
 @Embeddable
 @EqualsAndHashCode
