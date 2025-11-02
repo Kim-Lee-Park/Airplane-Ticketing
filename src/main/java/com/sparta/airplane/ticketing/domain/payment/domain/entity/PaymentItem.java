@@ -18,6 +18,26 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * 결제 항목 추상 Entity
+ *
+ * <역할>
+ * - Payment Aggregate 내에서 개별 결제 수단을 나타내는 기본 Entity
+ * - 카드 결제(CardPaymentItem), 마일리지 결제(MileagePaymentItem)의 공통 속성과 행위 정의
+ *
+ * <설계 이유>
+ * - 추상 Entity로 설계한 이유:
+ *   1. 다양한 결제 수단에 대해 다형성 및 확장성을 가져가기 위함
+ *   2. 결제 금액과 Payment 엔티티 참조는 모든 결제 수단에 공통적으로 필요함
+ *
+ * - JOINED 상속 전략 사용 이유:
+ *   SINGLE_TABLE 상속 전략 사용 시, 하나의 테이블로 모든 컬럼을 관리
+ *   결제 수단별로 불필요한 컬럼에 null이 들어가는 문제 발생
+ *   JOINED 상속 전략을 통해 각각 별개의 테이블로 관리
+ *
+ * - Entity인 이유:
+ *   식별자가 필요하며, Payment Aggregate 내에서만 관리됨
+ */
 @Entity
 @Table(name = "payment_items")
 @Getter

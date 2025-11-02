@@ -6,6 +6,10 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * 고객 ID 값 객체
+ * - 양수 및 null 검증 로직 포함
+ */
 @Getter
 @Embeddable
 @EqualsAndHashCode

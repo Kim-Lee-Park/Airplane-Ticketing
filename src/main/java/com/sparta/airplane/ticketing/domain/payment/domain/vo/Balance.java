@@ -7,6 +7,12 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * 마일리지 잔액 값 객체
+ * - 마일리지 지갑의 현재 잔액을 나타내는 측정값
+ * - BigDecimal 타입으로 정확한 금액 계산 보장
+ * - 양수 검증 로직 포함
+ */
 @Getter
 @Embeddable
 @EqualsAndHashCode

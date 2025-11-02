@@ -3,6 +3,9 @@ package com.sparta.airplane.ticketing.domain.payment.domain.vo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * 결제 상태 값 객체 (Enum)
+ */
 @Getter
 @AllArgsConstructor
 public enum PaymentStatus {

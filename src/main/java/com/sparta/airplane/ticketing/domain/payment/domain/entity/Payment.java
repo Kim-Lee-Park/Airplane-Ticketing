@@ -25,6 +25,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
+/**
+ * 결제 Aggregate Root
+ *
+ * <역할>
+ * - 예약에 대한 결제 생명주기(생성, 결제 수단 추가, 완료, 환불)를 관리하는 핵심 도메인 객체
+ * - 복합 결제(카드 + 마일리지) 처리 및 결제 금액의 일관성 보장
+ * - 결제 항목들의 총합이 예약 금액과 일치하는지 검증
+ *
+ * <설계 이유>
+ * - Aggregate Root로 설계한 이유:
+ *   1. 결제는 독립적인 비즈니스 경계를 가지며, 결제 상태 변경 시 모든 결제 항목의 일관성 보장 필요
+ *   2. PaymentItem들은 Payment를 통해서만 추가되고 관리되어야 함
+ *   3. 결제 완료/환불 같은 비즈니스 규칙이 결제 컨텍스트 내에서 결정됨
+ *
+ * <Aggregate 경계>
+ * - Payment (루트)
+ * - PaymentItem (CardPaymentItem, MileagePaymentItem) (자식 Entity)
+ * - PaymentStatus, ReservationId, PaymentUserId, PaymentItemAmount (값 객체)
+ */
 @Entity
 @Table(name = "payments")
 @Getter
