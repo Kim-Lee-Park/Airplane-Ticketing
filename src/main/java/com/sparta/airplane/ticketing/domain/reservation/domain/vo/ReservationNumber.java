@@ -3,6 +3,9 @@ package com.sparta.airplane.ticketing.domain.reservation.domain.vo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
+/**
+ * 예약 번호 값 객체
+ */
 @Embeddable
 public record ReservationNumber(
         @Column(name = "reservation_number", nullable = false)

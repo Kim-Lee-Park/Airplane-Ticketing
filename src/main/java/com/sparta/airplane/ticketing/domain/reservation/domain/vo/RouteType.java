@@ -3,6 +3,11 @@ package com.sparta.airplane.ticketing.domain.reservation.domain.vo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * 항공편 왕복 여부 관련 Enum
+ * - ONE_WAY : 편도
+ * - ROUND_TRIP : 왕복
+ */
 @Getter
 @AllArgsConstructor
 public enum RouteType {

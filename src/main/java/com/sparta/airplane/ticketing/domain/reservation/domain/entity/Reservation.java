@@ -31,6 +31,26 @@ import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.NaturalIdCache;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
+/**
+ * 예약 관련 Aggregate Root
+ *
+ * <역할>
+ * - 예약 생명주기(생성, 확정, 취소)를 관리하는 핵심 도메인 객체
+ * - 예약에 포함된 승객, 경로, 금액 정보의 일관성을 보장
+ * - 예약 번호를 통해 외부에서 식별되고 조회됨
+ *
+ * <설계 이유>
+ * - Aggregate Root로 설계한 이유:
+ *   1. 예약은 독립적인 비즈니스 경계를 가지며, 예약 상태 변경 시 모든 하위 정보의 일관성 보장 필요
+ *   2. 승객 목록, 경로 정보, 총 금액은 예약을 통해서만 변경되어야 함
+ *   3. 예약 취소 가능 여부 같은 비즈니스 규칙이 예약 컨텍스트 내에서 결정됨
+ *
+ * <Aggregate 경계>
+ * - Reservation (루트)
+ * - ReservationNumber, RouteInfo, TotalAmount (값 객체)
+ * - Passenger (컬렉션 값 객체)
+ * - ReservationStatus,
+ */
 @Entity
 @Table(name = "reservations")
 @Getter
